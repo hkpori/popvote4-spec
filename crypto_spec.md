@@ -362,6 +362,12 @@ verification (including servers) without disclosing the **Voter ID** or the **Vo
 4. Compute the `crypto_hash` of the concatenation of **Voter Hash** and **Voter Hash Secret**.
    **Blinded Voter Hash** is the first 32 bytes of the hash.
 
+#### Voter Attributes
+
+The **Voter Attributes** is an optional attributes of the voter that is verified by a voting
+station. It may include voting district and constituency. The attributes are separated from the
+**Voter ID** to allow tallying process to verify ballots according to the attributes.
+
 #### Voter Signing Key
 
 The **Voter Signing Key** is a NaCl Ed25519 signing keypair that is used as the pseudonymous
@@ -379,7 +385,8 @@ The **Voter Request** contains these contents:
 * The **Ephemeral Public Key** is a NaCl public encryption key. The ephemeral keypair is generated
   at random by the voter and only used for one ballot.
 * The **Ballot Box** is an encryption of ballot contents.
-* The **Voter ID Box** is a `crypto_box` containing the voter's raw **Voter ID**.
+* The **Voter Box** is a `crypto_box` containing the voter's raw **Voter ID** and **Voter
+  Attributes**.
 
 The Voter Client creates the **Voter Request** with the following steps:
 
@@ -407,6 +414,7 @@ The Voter Client creates the **Voter Request** with the following steps:
 10. Concatenate these values to form the **Voter ID Box** encryption payload:
     * **Voter ID**.
     * **Voter Hash Secret**.
+    * **Voter Attributes**.
     * **Voter Public Signing Key**.
 11. Encrypt bytes from #11 using `crypto_box` with the **Station Public Encryption Key**, the
     **Ephemeral Private Key**, and the nonce `popvote_2020_voterid_box` to give the **Voter ID
@@ -415,14 +423,16 @@ The Voter Client creates the **Voter Request** with the following steps:
 #### Voter Certificate
 
 The Voting Station device creates the **Voter Certificate** after a Voter Station Officer validating
-the **Voter ID** against the voter's ID documents. It is used by the tallying process to confirm
-that the voter has been checked in a voting station. It contains these contents:
+the **Voter ID** and **Voter Attributes** against the voter's ID documents. It is used by the
+tallying process to prove that the voter has been registered by a voting station. It contains these
+contents:
 
 * **Voting Station Public Signing Key** is the station's long-term NaCl public signing key.
 * **Voting Station Signature** is a detached NaCl signature, 64 bytes.
 * **Voting Station Timestamp** is the time when the station device generates this certificate.
 * **Voter Public Signing Key** is the voter's long-term public signing key.
 * **Blinded Voter Hash** derived from the **Voter ID** and **Voter Hash Secret**.
+* **Voter Attributes** is the attributes of the voter, such as constituency.
 
 The voting station creates the **Voter Certificate** with the following steps:
 
@@ -433,6 +443,7 @@ The voting station creates the **Voter Certificate** with the following steps:
     * **Voting Station Timestamp**.
     * **Voter Public Signing Key**.
     * **Blinded Voter Hash**.
+    * **Voter Attributes**.
 5. Sign the signature input from #4 using the station device's long-term signing private key,
    producing a 64-byte Ed25519 signature to give the **Voting Station Signature**.
 
@@ -475,6 +486,9 @@ graph BT
 
   hash((crypto_hash))
   hash-->bvh
+
+  va[Voter Attributes]
+  va-->sign1
 
   sign2((crypto_sign))
   sign2-->box1
