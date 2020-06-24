@@ -17,6 +17,10 @@ transparency to the design, security and trade-off of the system to different st
 
 The team plan to open sources and license the software after the Primaries completed in Jul 2020.
 
+## Contents
+
+[Cryptography Specification](crypto_spec.md)
+
 ## Questions?
 
 For technical questions or suggestions, please create an issues in this repo. For other general questions about usage of POPVote or troubleshooting, please contact PORI or the organization running events with POPVote.
