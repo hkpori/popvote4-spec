@@ -240,8 +240,8 @@ generated and distributed to stations with these steps.
    encryption input.
 7. Encrypt the bytes from #6 key using `crypto_secretbox` with the **Key Wrapping Key** from #4 and
    the random nonce from #5.
-8. Prepend the **Nonce** on the the encrypted bytes from #7 to give the **Voting Station Keys
-   Secretbox**.
+8. Prepend the **Nonce** on the the encrypted bytes from #7 to give the **Encrypted Voting Station
+   Key**.
 6. Register the station public keys as an authorized station device and erase the private keys.
 7. Generate a QR code from **Encrypted Voting Station Key** for later distribution.
 
@@ -289,8 +289,8 @@ The **Manifest File** contains these contents:
 The **Voting Station Device Info** contains these contents:
 
 * A unique 4 digits **Voting Station Number**.
-* **Station Public Signing Key**
-* **Station Public Encryption Key**
+* **Voting Station Public Signing Key**
+* **Voting Station Public Encryption Key**
 * **Manifest Key Box** is a `crypto_box` containing a copy of the **Manifest Key**.
 
 To generate a **Signed Manifest File**:
@@ -380,7 +380,7 @@ The Voter Client creates the **Voter Request** with the following steps:
     * **Voter Hash Secret**.
     * **Voter Attributes**.
     * **Voter Public Signing Key**.
-11. Encrypt bytes from #11 using `crypto_box` with the **Station Public Encryption Key**, the
+11. Encrypt bytes from #10 using `crypto_box` with the **Station Public Encryption Key**, the
     **Ephemeral Private Key**, and the nonce `popvote_2020_voterid_box` to give the **Voter ID
     Box**.
 
@@ -408,8 +408,8 @@ The voting station creates the **Voter Certificate** with the following steps:
     * **Voter Public Signing Key**.
     * **Blinded Voter Hash**.
     * **Voter Attributes**.
-5. Sign the signature input from #4 using the station device's long-term signing private key,
-   producing a 64-byte Ed25519 signature to give the **Voting Station Signature**.
+5. Sign the signature input from #4 using the **Voting Station Private Signing Key**, producing a
+   64-byte Ed25519 signature to give the **Voting Station Signature**.
 
 #### Ballot Envelope
 
