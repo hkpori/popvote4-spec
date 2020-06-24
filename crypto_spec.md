@@ -190,43 +190,7 @@ salt whose fixed length is `SALTBYTES` bytes.
 
 The following diagram describes the high-level transactions between the system modules:
 
-```mermaid
-sequenceDiagram
-  autonumber
-  participant Operation Center
-  participant Application Server
-  participant CDN
-  participant Voting Station Device
-  participant Voter Client
-
-
-  loop Each voting station device
-    Operation Center->>Voting Station Device: Encrypted Station Key (offline distribution)
-    Operation Center->>Voting Station Device: Station Password (offline distribution)
-  end
-  Operation Center->>CDN: Signed Manifest File
-  loop Each voting station device
-    CDN->>Voting Station Device: Signed Manifest File
-    note right of Voting Station Device: Verify that voting<br>station is included in the<br>Manifest File
-  end
-
-  loop Each voter
-    CDN->>Voter Client: Signed Manifest file
-    note right of Voter Client: Enter voter ID and<br>vote on voter<br>devices
-    Voting Station Device->>Voter Client: Voting Station Number
-    Voter Client->>Voting Station Device: Voter Request (QR code)
-    note left of Voting Station Device: Verify Voter ID
-    alt Application Server is available
-      Voting Station Device->>Application Server: Ballot Envelope
-    else Application Server is unavailable
-      Voting Station Device->>Voting Station Device: Write Ballot Envelope to a local file
-      Voting Station Device-xApplication Server: Ballot Envelope
-    end
-  end
-
-  Application Server->>Operation Center: All Ballot Envelopes
-  note left of Operation Center: Decrypt, verify and<br>tally
-```
+![Application Flow](app_flow.svg)
 
 ### Set-up Phase
 
@@ -458,72 +422,7 @@ The **Ballot Envelope** is a valid ballot submission for the tallying process. I
 The Voting Station Device generates and submits a Ballot Envelope to the Application Server to
 complete a ballot submission process.
 
-```mermaid
-graph BT
-  be[Ballot Envelope]
-
-  vc[Voter Certificate]
-  vc-->be
-
-  sk{{Voting Station Signing Keypair}}
-  sk--public key-->vc
-  sk-.private key.->sign1
-
-  sign1((crypto_sign))
-  sign1-->vc
-
-  st[Voting Station Timestamp]
-  st-->sign1
-
-  box1((crypto_box))
-  box1-->bb
-
-  bb[Ballot Box]
-  bb-->be
-
-  bvh[Blinded Voter Hash]
-  bvh-->sign1
-
-  hash((crypto_hash))
-  hash-->bvh
-
-  va[Voter Attributes]
-  va-->sign1
-
-  sign2((crypto_sign))
-  sign2-->box1
-
-  vk{{Voter Signing Keypair}}
-  vk--public key-->sign1
-  vk-. private key .->sign2
-
-  bc[Ballot Contents]
-  bc-->sign2
-
-  bt[Ballot Timestamp]
-  bt-->sign2
-
-  vh[Voter Hash]
-  vh-->box1
-  vh-->hash
-
-  vhs[Voter Hash Secret]
-  vhs-->box1
-  vhs-->hash
-
-  vid[Voter ID]
-  vid-->scrypt
-
-  scrypt((scrypt))
-  scrypt-->vh
-
-  tpk{{Tallying Authority Public Key}}
-  tpk.->box1
-
-  ek{{Ephemeral Keypair}}
-  ek--public key-->be
-  ek-. private key .->box1
-```
+![Ballot Envelope](ballot_envelope.svg)
 
 ### Counting Phase
 

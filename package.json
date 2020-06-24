@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "build": "mmdc -i app_flow.mmd -o app_flow.svg && mmdc -i ballot_envelope.mmd -o ballot_envelope.svg"
+  },
+  "dependencies": {
+    "@mermaid-js/mermaid-cli": "^8.5.1-2"
+  }
+}

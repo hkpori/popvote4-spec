@@ -1,0 +1,35 @@
+sequenceDiagram
+  autonumber
+  participant Operation Center
+  participant Application Server
+  participant CDN
+  participant Voting Station Device
+  participant Voter Client
+
+
+  loop Each voting station device
+    Operation Center->>Voting Station Device: Encrypted Station Key (offline distribution)
+    Operation Center->>Voting Station Device: Station Password (offline distribution)
+  end
+  Operation Center->>CDN: Signed Manifest File
+  loop Each voting station device
+    CDN->>Voting Station Device: Signed Manifest File
+    note right of Voting Station Device: Verify that voting<br>station is included in the<br>Manifest File
+  end
+
+  loop Each voter
+    CDN->>Voter Client: Signed Manifest file
+    note right of Voter Client: Enter voter ID and<br>vote on voter<br>devices
+    Voting Station Device->>Voter Client: Voting Station Number
+    Voter Client->>Voting Station Device: Voter Request (QR code)
+    note left of Voting Station Device: Verify Voter ID
+    alt Application Server is available
+      Voting Station Device->>Application Server: Ballot Envelope
+    else Application Server is unavailable
+      Voting Station Device->>Voting Station Device: Write Ballot Envelope to a local file
+      Voting Station Device-xApplication Server: Ballot Envelope
+    end
+  end
+
+  Application Server->>Operation Center: All Ballot Envelopes
+  note left of Operation Center: Decrypt, verify and<br>tally
