@@ -163,7 +163,7 @@ salt whose fixed length is `SALTBYTES` bytes.
 ### Actors
 
 * **Polling Authority** is a group of individuals who hold a share to the keys to sign manifest
-  files. They are responsible for maintaining the systme's integrity, such as authorizing Tallying
+  files. They are responsible for maintaining the system's integrity, such as authorizing Tallying
   Authority and Voting Station Devices.
 * **Tallying Authority** is a group of individuals who hold a share to the keys to decrypt ballots.
   They are responsible for the tallying process. There can be multiple Tallying Authority for
