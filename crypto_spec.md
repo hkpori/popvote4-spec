@@ -25,7 +25,7 @@ properties that we want to achieve in PopVote 4.0:
   system were compromised.
 * **Invulnerability** A system is invulnerable if (1) it permits only eligible voters to vote, and
   (2) it ensures that each eligible voter can vote only once.
-* **Fairness.** No participant can gain any knowledge, except his vote, about the (partial) tally
+* **Fairness.** No participant can gain any knowledge, except his or her vote, about the (partial) tally
   before the counting phase.
 * **Availability.** The system remains functional even if some of the servers are forced offline.
 * **Convenience.** The system allows voters to cast their votes quickly, in one session, and with
@@ -531,7 +531,7 @@ ability to satisfy these properties.
   This can be detected maintaining an out-of-band voters count as part of the procedural controls. A
   third-party auditor may check the Voter Certificates of all ballots, and the out-of-band voters
   count for statistical abnormality.
-* **Fairness.** Before the Counting Stage, no participate can gain any knowledge except his vote
+* **Fairness.** Before the Counting Stage, no participate can gain any knowledge except his or her vote
   about the partial tally because the ballots are end-to-end encrypted with Tallying Authority key
   on voters' devices. The key is protected by a threshold secret sharing scheme that a threshold of
   Tallying Authority members must be present to open the ballots. Voting Station personnel and
