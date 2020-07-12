@@ -7,9 +7,9 @@ polling. It is designed for non-government and unofficial polling as a means to 
 public opinions in authoritarian regimes. In consideration of the politically-sensitive nature, the
 system must guarantee strong privacy to the voters.
 
-The current version is designed and developed for physical voting stations of Hong Kong's Democratic
-Party Primaries in the 2020 Legislative Council election, but the system is designed to be useful
-beyond that and to support voting over the Internet like previous POPVote (2014 Civil Referendum
+While the current version is designed and developed for physical voting stations of Hong Kong's Pan-Democratic
+Primaries in the 2020 Legislative Council election, the system is designed to be useful
+beyond that, including support for voting over the Internet like previous POPVote (2014 Civil Referendum
 Project).
 
 The team are open-sourcing the specification in Apache 2 license, and we wish it will provide
