@@ -146,7 +146,7 @@ The `crypto_hash` function returns SHA-512 hash of the message.
 
 ### Key Stretching
 
-The `scrypt` function derives a `OUTPUTBYTES` bytes long key from a password `passwd` and a salt
+The `scrypt` function derives a `OUTPUTBYTES` bytes long key from a password `passwd` and a
 salt whose fixed length is `SALTBYTES` bytes.
 
 #### Algorithm Details
