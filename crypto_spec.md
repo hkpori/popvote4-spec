@@ -240,7 +240,7 @@ generated and distributed to stations with these steps.
    encryption input.
 7. Encrypt the bytes from #6 key using `crypto_secretbox` with the **Key Wrapping Key** from #4 and
    the random nonce from #5.
-8. Prepend the **Nonce** on the the encrypted bytes from #7 to give the **Encrypted Voting Station
+8. Prepend the **Nonce** on the encrypted bytes from #7 to give the **Encrypted Voting Station
    Key**.
 6. Register the station public keys as an authorized station device and erase the private keys.
 7. Generate a QR code from **Encrypted Voting Station Key** for later distribution.
