@@ -349,7 +349,7 @@ The **Voter Request** contains these contents:
 * The **Ephemeral Public Key** is a NaCl public encryption key. The ephemeral keypair is generated
   at random by the voter and only used for one ballot.
 * The **Ballot Box** is an encryption of ballot contents.
-* The **Voter Box** is a `crypto_box` containing the voter's raw **Voter ID** and **Voter
+* The **Voter ID Box** is a `crypto_box` containing the voter's raw **Voter ID** and **Voter
   Attributes**.
 
 The Voter Client creates the **Voter Request** with the following steps:
