@@ -25,7 +25,7 @@ properties that we want to achieve in PopVote 4.0:
   system were compromised.
 * **Invulnerability** A system is invulnerable if (1) it permits only eligible voters to vote, and
   (2) it ensures that each eligible voter can vote only once.
-* **Fairness.** No participant can gain any knowledge, except his vote, about the (partial) tally
+* **Fairness.** No participant can gain any knowledge, except his or her vote, about the (partial) tally
   before the counting phase.
 * **Availability.** The system remains functional even if some of the servers are forced offline.
 * **Convenience.** The system allows voters to cast their votes quickly, in one session, and with
@@ -146,7 +146,7 @@ The `crypto_hash` function returns SHA-512 hash of the message.
 
 ### Key Stretching
 
-The `scrypt` function derives a `OUTPUTBYTES` bytes long key from a password `passwd` and a salt
+The `scrypt` function derives a `OUTPUTBYTES` bytes long key from a password `passwd` and a
 salt whose fixed length is `SALTBYTES` bytes.
 
 #### Algorithm Details
@@ -163,7 +163,7 @@ salt whose fixed length is `SALTBYTES` bytes.
 ### Actors
 
 * **Polling Authority** is a group of individuals who hold a share to the keys to sign manifest
-  files. They are responsible for maintaining the systme's integrity, such as authorizing Tallying
+  files. They are responsible for maintaining the system's integrity, such as authorizing Tallying
   Authority and Voting Station Devices.
 * **Tallying Authority** is a group of individuals who hold a share to the keys to decrypt ballots.
   They are responsible for the tallying process. There can be multiple Tallying Authority for
@@ -240,7 +240,7 @@ generated and distributed to stations with these steps.
    encryption input.
 7. Encrypt the bytes from #6 key using `crypto_secretbox` with the **Key Wrapping Key** from #4 and
    the random nonce from #5.
-8. Prepend the **Nonce** on the the encrypted bytes from #7 to give the **Encrypted Voting Station
+8. Prepend the **Nonce** on the encrypted bytes from #7 to give the **Encrypted Voting Station
    Key**.
 6. Register the station public keys as an authorized station device and erase the private keys.
 7. Generate a QR code from **Encrypted Voting Station Key** for later distribution.
@@ -531,7 +531,7 @@ ability to satisfy these properties.
   This can be detected maintaining an out-of-band voters count as part of the procedural controls. A
   third-party auditor may check the Voter Certificates of all ballots, and the out-of-band voters
   count for statistical abnormality.
-* **Fairness.** Before the Counting Stage, no participate can gain any knowledge except his vote
+* **Fairness.** Before the Counting Stage, no participate can gain any knowledge except his or her vote
   about the partial tally because the ballots are end-to-end encrypted with Tallying Authority key
   on voters' devices. The key is protected by a threshold secret sharing scheme that a threshold of
   Tallying Authority members must be present to open the ballots. Voting Station personnel and
